@@ -7,6 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jdebes/LinkTreeBackend/db"
+	"github.com/jdebes/LinkTreeBackend/handler"
 	"github.com/jmoiron/sqlx"
 	log "github.com/sirupsen/logrus"
 )
@@ -27,7 +28,7 @@ func NewServer() *http.Server {
 	sqlDb, err := db.NewDB(db.Config{
 		User:     "user",
 		Password: "password",
-		Host:     "db",
+		Host:     "127.0.0.1",
 		Port:     3306,
 		Database: "linktree",
 	})
@@ -49,6 +50,7 @@ func NewServer() *http.Server {
 
 func newRouter() *mux.Router {
 	r := mux.NewRouter()
+	r.HandleFunc("/link", handler.LinkHandler).Methods(http.MethodGet)
 
 	return r
 }

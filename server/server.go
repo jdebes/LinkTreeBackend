@@ -13,13 +13,15 @@ import (
 )
 
 type RootHandler struct {
-	router *mux.Router
-	db     *sqlx.DB
+	router    *mux.Router
+	db        *sqlx.DB
+	mockStore *db.MockStore
 }
 
 func (f *RootHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	ctx = db.WithDB(ctx, f.db)
+	ctx = db.WithStore(ctx, f.mockStore)
 
 	f.router.ServeHTTP(w, r.WithContext(ctx))
 }
@@ -36,11 +38,14 @@ func NewServer() *http.Server {
 		panic(err)
 	}
 
+	mockStore := db.NewMockStore()
+
 	return &http.Server{
 		Addr: ":8080",
 		Handler: &RootHandler{
-			router: newRouter(),
-			db:     sqlDb,
+			router:    newRouter(),
+			db:        sqlDb,
+			mockStore: mockStore,
 		},
 		ReadTimeout:       15 * time.Second,
 		ReadHeaderTimeout: 15 * time.Second,
@@ -50,7 +55,8 @@ func NewServer() *http.Server {
 
 func newRouter() *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/link", handler.LinkHandler).Methods(http.MethodGet)
+	r.HandleFunc("/link", handler.GetLink).Methods(http.MethodGet)
+	r.HandleFunc("/link", handler.PostLink).Methods(http.MethodPost)
 
 	return r
 }

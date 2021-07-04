@@ -130,5 +130,3 @@ POST /links
     ]
 }
 ```
-
-Example embedded request such as music:

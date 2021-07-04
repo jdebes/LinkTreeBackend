@@ -18,8 +18,8 @@ const (
 // this would be a single title and url. But through the LinkAsset's this could be multiple links which make up
 // something more complex like the music player.
 type Link struct {
-	ID          int64     `db:"id"`
-	Type        LinkType  `db:"type"`
-	CreatedDate time.Time `db:"created_date"`
+	ID          int64     `db:"id" json:"id"`
+	Type        LinkType  `db:"type" json:"type"`
+	CreatedDate time.Time `db:"created_date" json:"createdDate"`
 	LinkAssets  []*LinkAsset
 }

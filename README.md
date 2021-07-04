@@ -47,6 +47,7 @@ Assumptions:
 - Improve ordering to allow client to specify direction (ascending or descending).
 - User is currently hardcoded to only 1 existing user, this needs to be changed to allow userid to be retrieved out of a JWT token (as an example).
 - Request/Response currently use ints to represent enum for Type, this needs to be fixed to include mapping to and from string desc.
+- Move name (title) under link instead of link_asset.
 
 ## Setup
 
@@ -68,12 +69,7 @@ GET /links?orderByDate=false
 
 This endpoint will get a links for a specified user (Currently only 1 hardcoded user for every request there is TODO for this).
 
-POST link endpoint:
-
-```
-POST /links
-```
-Example body for music player link (with only spotify resource):
+Example Response for music resource.
 
 ```
 {
@@ -83,7 +79,7 @@ Example body for music player link (with only spotify resource):
     "linkAssets": [
         {
             "ID": 5,
-            "type": 0,
+            "type": 1,
             "name": "Song A",
             "url": "https://open.spotify.com/track/269OfNY9Je1QWaDnu31KKp?si=68e7296d03184662",
             "platform": {
@@ -114,3 +110,25 @@ Example for classic resource:
     ]
 }
 ```
+
+POST link endpoint:
+
+```
+POST /links
+```
+ Example request body:
+ 
+```
+{
+    "type": 0,
+    "linkAssets": [
+        {
+            "type": 0,
+            "name": "test github classic link",
+            "url": "https://github.com/jdebes"
+        }
+    ]
+}
+```
+
+Example embedded request such as music:

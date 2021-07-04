@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"sort"
 	"time"
 
 	"github.com/jdebes/LinkTreeBackend/handler/model"
@@ -28,10 +29,16 @@ type Link struct {
 	LinkAssets  []*LinkAsset `json:"linkAssets"`
 }
 
-func QueryLinks(store *MockStore, userId int64) ([]*Link, error) {
+func QueryLinks(store *MockStore, userId int64, orderByCreated bool) ([]*Link, error) {
 	user, err := store.User(userId)
 	if err != nil {
 		return nil, err
+	}
+
+	if orderByCreated {
+		sort.Slice(user.Links, func(i, j int) bool {
+			return user.Links[i].CreatedDate.After(user.Links[j].CreatedDate)
+		})
 	}
 
 	return user.Links, err

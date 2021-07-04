@@ -56,8 +56,11 @@ func NewServer() *http.Server {
 
 func newRouter() *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/link", handler.GetLink).Methods(http.MethodGet)
-	r.HandleFunc("/link", handler.PostLink).Methods(http.MethodPost)
+	r.HandleFunc("/link", handler.GetLink).
+		Queries("orderByDate", "{orderByDate}").
+		Methods(http.MethodGet)
+	r.HandleFunc("/link", handler.PostLink).
+		Methods(http.MethodPost)
 
 	return r
 }

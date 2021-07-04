@@ -9,6 +9,7 @@ import (
 
 type LinkType int
 
+// TODO change this to include a mapping from iota number to name, for the response.
 func (a LinkType) String() string {
 	return [...]string{"Classic", "MusicPlayer", "ShowsList"}[a]
 }

@@ -26,6 +26,7 @@ func GetLink(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// TODO remove this hardcoding of the userId and retrieve it via an authentication toke
 	links, err := repository.QueryLinks(store, 0, shouldOrder)
 	if err != nil {
 		api.Error(w, err, http.StatusBadRequest)

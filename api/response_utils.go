@@ -24,14 +24,6 @@ func Error(w http.ResponseWriter, raisedError error, status int) {
 	writeErrResponseWithLogLevel(w, raisedError, http.StatusText(status), status, log.ErrorLevel)
 }
 
-func Info(w http.ResponseWriter, raisedError error, status int) {
-	writeErrResponseWithLogLevel(w, raisedError, http.StatusText(status), status, log.InfoLevel)
-}
-
-func Debug(w http.ResponseWriter, raisedError error, status int) {
-	writeErrResponseWithLogLevel(w, raisedError, http.StatusText(status), status, log.DebugLevel)
-}
-
 func writeErrResponseWithLogLevel(w http.ResponseWriter, raisedError error, message string, status int, level log.Level) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("X-Content-Type-Options", "nosniff")

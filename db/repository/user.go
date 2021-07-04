@@ -5,5 +5,6 @@ package repository
 // This may be a bit unrealistic as a user may have multiple landing pages and will want to organise links under that
 // but it was done to keep the task simple.
 type User struct {
-	ID int64 `db:"id"`
+	ID    int64 `db:"id"`
+	Links []*Link
 }

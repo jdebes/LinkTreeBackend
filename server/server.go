@@ -7,6 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/jdebes/LinkTreeBackend/db"
+	"github.com/jdebes/LinkTreeBackend/db/repository"
 	"github.com/jdebes/LinkTreeBackend/handler"
 	"github.com/jmoiron/sqlx"
 	log "github.com/sirupsen/logrus"
@@ -15,13 +16,13 @@ import (
 type RootHandler struct {
 	router    *mux.Router
 	db        *sqlx.DB
-	mockStore *db.MockStore
+	mockStore *repository.MockStore
 }
 
 func (f *RootHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	ctx = db.WithDB(ctx, f.db)
-	ctx = db.WithStore(ctx, f.mockStore)
+	ctx = repository.WithStore(ctx, f.mockStore)
 
 	f.router.ServeHTTP(w, r.WithContext(ctx))
 }
@@ -38,7 +39,7 @@ func NewServer() *http.Server {
 		panic(err)
 	}
 
-	mockStore := db.NewMockStore()
+	mockStore := repository.NewMockStore()
 
 	return &http.Server{
 		Addr: ":8080",

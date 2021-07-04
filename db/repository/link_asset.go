@@ -21,9 +21,9 @@ const (
 // LinkAssets (an embeddable link which represents a song, playlist, album) etc.
 // The thinking behind this is that any link type is just a collection of external resources to displayed.
 type LinkAsset struct {
-	ID       int64     `db:"id"`
-	Type     AssetType `db:"type" json:"type"`
-	Name     string    `db:"name" json:"name"`
-	Url      string    `db:"url" json:"url"`
-	Platform `db:"platform" json:"platform"`
+	ID        int64     `db:"id"`
+	Type      AssetType `db:"type" json:"type"`
+	Name      string    `db:"name" json:"name"`
+	Url       string    `db:"url" json:"url"`
+	*Platform `db:"platform" json:"platform"`
 }

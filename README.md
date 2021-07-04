@@ -30,14 +30,21 @@ The `db/migrations` directory contains MySQL scripts that describe the database 
 ### Schema Explanation
 
 The problem spec gave the above link examples, but stated that these are 3 out of hundreds of potential link types. So the schema is designed to be flexible,
-in terms of the information that a link can represent, to make sure it's not boxed in to just the 3 given link types. But there are still some assumptions
+in terms of the information that a link can represent, to make sure it's not boxed in to just the 3 given link types. But there are still some further assumptions
 that I made to constrain the design.
 
 Assumptions:
-1. Every possible link type is a collection of web resources that are either redirects the viewer somewhere to or embedded (i.e in an iframe). An as such a link may contain any amount of resources, which may be urls for a song/album/playlist for a specific platform that are to be displayed in an iframe. Or links to events, products, affiliate links etc.
+1. Every possible link type is a collection of web resources that are either redirects the viewer somewhere to is an embedded resource (i.e in an iframe). An as such a link may contain any amount of resources, which may be urls for a song/album/playlist for a specific platform that are to be displayed in an iframe. Or links to events, products, affiliate links etc.
 2. We won't be storing too much data about the resource that we are displaying, i.e we don't care about the title, etc of a song as the embedded resource will take care of that.
 3. The second assumption was made to keep the implementation doable in the amount of time, however the design can be extended to include more metadata about the resource. (i.e it appears like shows list requires us to store whether the show is for sale or sold out).
 4. Music and Shows does not have a configurable top level link title
+5. A user has only 1 landing page (to simplify task)
+
+The schema is made up of the following tables, which are explained conceptually:
+Link - This represents a single link type e.g classic, music, shows.
+Link_asset - This represents multiple resources that a link may have (such as multiple music players and platforms or shows)
+Platform - This is for embedded link types which link back to a platform information record, such as the platforms webpage etc.
+User - The user who has 1 landing page made up of links.
 
 ## Summary of TODOs
 

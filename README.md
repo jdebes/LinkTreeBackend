@@ -55,6 +55,7 @@ User - The user who has 1 landing page made up of links.
 - User is currently hardcoded to only 1 existing user, this needs to be changed to allow userid to be retrieved out of a JWT token (as an example).
 - Request/Response currently use ints to represent enum for Type, this needs to be fixed to include mapping to and from string desc.
 - Move name (title) under link instead of link_asset.
+- Add API tests and unit tests
 
 ## Setup
 

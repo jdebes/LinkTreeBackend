@@ -103,6 +103,7 @@ Example Response for music resource.
 Example for classic resource:
 
 ```
+{
     "id": 4,
     "type": 0,
     "createdDate": "2021-07-04T19:19:56.059245772+12:00",

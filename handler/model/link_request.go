@@ -11,7 +11,7 @@ type LinkAsset struct {
 	Type       int    `json:"type"`
 	Name       string `json:"name"`
 	Url        string `json:"url"`
-	PlatformID int64  `json:"platformId"`
+	PlatformID *int64 `json:"platformId"`
 }
 
 type Link struct {

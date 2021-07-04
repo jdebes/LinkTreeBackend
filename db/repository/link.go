@@ -58,9 +58,12 @@ func InsertLink(store *MockStore, linkRequest model.Link, userId int64) (*Link, 
 	}
 
 	for _, value := range linkRequest.LinkAssets {
-		platform, err := store.Platform(value.PlatformID)
-		if err != nil {
-			return nil, err
+		var platform *Platform
+		if value.PlatformID != nil {
+			platform, err = store.Platform(*value.PlatformID)
+			if err != nil {
+				return nil, err
+			}
 		}
 
 		asset := LinkAsset{
